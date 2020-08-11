@@ -4,11 +4,17 @@
     gather_subset:
       - '!all'
 
+- name: check if go binary is present
+  stat:
+    path: "{{ golang_install_dir }}/bin/go"
+  register: _go_bin_check
+
 - name: setup go
   include_tasks: setup.yml
   when: (golang_version != ansible_local.golang.general.version|default()) or
         (golang_install_clean|bool) or
-        (golang_install_clean_all|bool)
+        (golang_install_clean_all|bool) or
+        (not _go_bin_check.stat.exists)
 
 - name: get installed version of go from cli
   command: "{{ golang_install_dir }}/bin/go version"

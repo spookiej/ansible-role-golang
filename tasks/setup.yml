@@ -16,11 +16,11 @@
 - name: validate go version variables
   include_tasks: version-validation.yml
 
-- name: cleanup previous go installations
-  include_tasks: uninstall.yml
-
 - name: download go archive
   include_tasks: download.yml
+
+- name: cleanup previous go installations
+  include_tasks: uninstall.yml
 
 - name: install go
   include_tasks: install.yml
